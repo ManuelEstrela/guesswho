@@ -332,25 +332,25 @@ export default function App() {
             <h3>📋 Game Rules:</h3>
             <div className="rules">
               <div className="rule">
-                <strong>🎯 Objective:</strong> Be the first to guess your opponent's secret character!
+                <strong>🎯 Objective:</strong> Be the first to guess your opponent's secret clown!
               </div>
               <div className="rule">
-                <strong>🎮 Setup:</strong> Each player picks a secret character that the other must guess.
+                <strong>🎮 Setup:</strong> Each player picks a secret clown that the other must guess.
               </div>
               <div className="rule">
-                <strong>❓ Asking Questions:</strong> Take turns asking YES/NO questions only (e.g., "Does your character wear glasses?")
+                <strong>❓ Asking Questions:</strong> Take turns asking YES/NO questions only ("Does your clown wear glasses?")
               </div>
               <div className="rule">
-                <strong>📝 One Question Per Turn:</strong> You can only ask ONE question per turn. After getting an answer, you can mark characters or guess.
+                <strong>📝 One Question Per Turn:</strong> You can only ask ONE question per turn. After getting an answer, you can mark clowns or guess.
               </div>
               <div className="rule">
-                <strong>❌ Marking Characters:</strong> After each answer, click characters to mark them with X if they don't match the answer.
+                <strong>❌ Marking Clowns:</strong> After each answer, click clowns to mark them with X if they don't match the answer.
               </div>
               <div className="rule">
-                <strong>🎲 Making a Guess:</strong> When you think you know who it is, click a character and choose "Guess". If wrong, you lose your turn!
+                <strong>🎲 Making a Guess:</strong> When you think you know who it is, click a clown and choose "Guess". If wrong, you lose your turn!
               </div>
               <div className="rule">
-                <strong>🏆 Winning:</strong> First player to correctly guess the opponent's secret character wins!
+                <strong>🏆 Winning:</strong> First player to correctly guess the opponent's secret clown wins!
               </div>
             </div>
           </div>
@@ -383,7 +383,7 @@ export default function App() {
 
         {needPick && (
           <div className="character-selection">
-            <h3>🎭 Pick Your Secret Character:</h3>
+            <h3>🎭 Pick Your Secret Clown:</h3>
             <CharacterGrid 
               characters={CHARACTERS}
               selectable={true}
@@ -391,14 +391,14 @@ export default function App() {
               onSelect={setChosen}
             />
             <button onClick={confirmSecret} disabled={!chosen} className="confirm-btn">
-              ✅ Confirm Secret Character
+              ✅ Confirm Secret Clown
             </button>
           </div>
         )}
 
         {!needPick && (
           <div className="waiting">
-            <p>⏳ Waiting for both players to pick their secret characters...</p>
+            <p>⏳ Waiting for both players to pick their secret clowns...</p>
           </div>
         )}
 
@@ -410,8 +410,8 @@ export default function App() {
   if (view === 'pick') {
     return (
       <div className="page pick">
-        <h2>🎭 Pick Your Secret Character</h2>
-        <p>Choose a character for your opponent to guess:</p>
+        <h2>🎭 Pick Your Secret Clown</h2>
+        <p>Choose a clown for your opponent to guess:</p>
         
         <CharacterGrid 
           characters={CHARACTERS}
@@ -421,7 +421,7 @@ export default function App() {
         />
         
         <button onClick={confirmSecret} disabled={!chosen} className="confirm-btn">
-          ✅ Confirm Secret Character
+          ✅ Confirm Secret Clown
         </button>
 
         <ChatBox messages={messages} />
@@ -445,7 +445,7 @@ export default function App() {
 
       <div className="game-content">
         <div className="game-board">
-          <h3>🎭 Characters Board</h3>
+          <h3>🎭 Clown Board</h3>
           <CharacterGrid 
             characters={CHARACTERS}
             marks={myMarks}
@@ -473,7 +473,7 @@ export default function App() {
                     className="guess-btn"
                     disabled={!isMyTurn}
                   >
-                    🎯 Guess This Character
+                    🎯 Guess This Clown
                   </button>
                   <button 
                     onClick={() => {
@@ -531,7 +531,7 @@ export default function App() {
                     )}
                     {hasAskedQuestion && !waitingForAnswer && lastAnswerReceived && (
                       <div className={`question-limit-notice ${lastAnswerReceived.toLowerCase()}`}>
-                        <strong>{lastAnswerReceived}!</strong> You can now mark characters or make a guess!
+                        <strong>{lastAnswerReceived}!</strong> You can now mark clowns or make a guess!
                       </div>
                     )}
                   </div>
@@ -558,7 +558,7 @@ export default function App() {
 
                 {(canTakeActions || hasAskedQuestion) && (
                   <div className="action-hint">
-                    💡 Click any character to mark with X or make your guess!
+                    💡 Click any clown to mark with X or make your guess!
                   </div>
                 )}
 
@@ -576,7 +576,7 @@ export default function App() {
           <div className="stats-section">
             <h4>📊 Your Progress</h4>
             <div className="stats">
-              <div>Characters marked: {myMarks.length}</div>
+              <div>Clowns marked: {myMarks.length}</div>
               <div>Remaining: {CHARACTERS.length - myMarks.length}</div>
             </div>
           </div>

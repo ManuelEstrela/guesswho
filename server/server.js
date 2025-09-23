@@ -206,7 +206,7 @@ io.on('connection', (socket) => {
     
     // Find the character object that the opponent chose
     const opponentChosenCharacter = CHARACTERS.find(c => c.id === opponent.chosen);
-    console.log(`[debug] Opponent chosen character object:`, opponentChosenCharacter);
+    console.log(`[debug] Opponent chosen clown object:`, opponentChosenCharacter);
     
     if (opponentChosenCharacter) {
       console.log(`[debug] Comparing guess "${character}" with secret "${opponentChosenCharacter.name}"`);
@@ -228,7 +228,7 @@ io.on('connection', (socket) => {
         io.to(code).emit('turn_changed', { turn: party.turn });
       }
     } else {
-      console.log(`[debug] ERROR: Could not find opponent's chosen character for ID: ${opponent.chosen}`);
+      console.log(`[debug] ERROR: Could not find opponent's chosen clown for ID: ${opponent.chosen}`);
       socket.emit('error_message', 'Error processing guess');
     }
   });
