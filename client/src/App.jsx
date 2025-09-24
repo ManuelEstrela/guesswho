@@ -38,6 +38,10 @@ export default function App() {
   const [isConnected, setIsConnected] = useState(false)
   const [gameWinner, setGameWinner] = useState(null) // just store the winner name
 
+  // Stream protection state
+  const [isCodeVisible, setIsCodeVisible] = useState(false)
+  const [autoHideTimer, setAutoHideTimer] = useState(null)
+
   useEffect(() => {
     // Connection status
     socket.on('connect', () => {
@@ -147,6 +151,15 @@ export default function App() {
     }
   }, [name])
 
+  // Cleanup timer when component unmounts or code changes
+  useEffect(() => {
+    return () => {
+      if (autoHideTimer) {
+        clearTimeout(autoHideTimer)
+      }
+    }
+  }, [autoHideTimer])
+
   function addMessage(message) {
     setMessages(prev => [...prev, `[${new Date().toLocaleTimeString()}] ${message}`])
   }
@@ -170,6 +183,46 @@ export default function App() {
     setCode('')
     setPlayers([])
     setGameWinner(null)
+    setIsCodeVisible(false)
+    if (autoHideTimer) {
+      clearTimeout(autoHideTimer)
+      setAutoHideTimer(null)
+    }
+  }
+
+  // Stream protection functions
+  function showCode() {
+    setIsCodeVisible(true)
+    
+    // Auto-hide after 10 seconds
+    if (autoHideTimer) {
+      clearTimeout(autoHideTimer)
+    }
+    
+    const timer = setTimeout(() => {
+      setIsCodeVisible(false)
+      setAutoHideTimer(null)
+    }, 10000)
+    
+    setAutoHideTimer(timer)
+  }
+
+  function hideCode() {
+    setIsCodeVisible(false)
+    if (autoHideTimer) {
+      clearTimeout(autoHideTimer)
+      setAutoHideTimer(null)
+    }
+  }
+
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(code)
+      addMessage('Party code copied to clipboard!')
+    } catch (err) {
+      // Fallback for browsers that don't support clipboard API
+      addMessage(`Party code: ${code}`)
+    }
   }
 
   // Menu actions
@@ -365,7 +418,33 @@ export default function App() {
     return (
       <div className="page lobby">
         <div className="header">
-          <h2>🎪 Party: {code}</h2>
+          <div className="party-code-section">
+            <h2>🎪 Party:</h2>
+            <div className="code-display">
+              <span className="code-text">
+                {isCodeVisible ? code : '*****'}
+              </span>
+              <div className="code-buttons">
+                {isCodeVisible ? (
+                  <button onClick={hideCode} className="code-btn hide-btn">
+                    🙈 Hide Code
+                  </button>
+                ) : (
+                  <button onClick={showCode} className="code-btn show-btn">
+                    👁️ Show Code
+                  </button>
+                )}
+                <button onClick={copyCode} className="code-btn copy-btn">
+                  📋 Copy Code
+                </button>
+              </div>
+            </div>
+            {isCodeVisible && autoHideTimer && (
+              <div className="auto-hide-notice">
+                Code will auto-hide in 10 seconds
+              </div>
+            )}
+          </div>
           <button onClick={resetGame} className="leave-btn">Leave Party</button>
         </div>
 
@@ -434,7 +513,28 @@ export default function App() {
     <div className="page game">
       <div className="game-header">
         <div className="game-info">
-          <div>🎪 Party: {code}</div>
+          <div className="party-code-section">
+            <span>🎪 Party:</span>
+            <div className="code-display inline">
+              <span className="code-text">
+                {isCodeVisible ? code : '*****'}
+              </span>
+              <div className="code-buttons">
+                {isCodeVisible ? (
+                  <button onClick={hideCode} className="code-btn hide-btn small">
+                    🙈
+                  </button>
+                ) : (
+                  <button onClick={showCode} className="code-btn show-btn small">
+                    👁️
+                  </button>
+                )}
+                <button onClick={copyCode} className="code-btn copy-btn small">
+                  📋
+                </button>
+              </div>
+            </div>
+          </div>
           <div>👤 You: {name} ({mySide})</div>
           <div className={`turn-indicator ${isMyTurn ? 'my-turn' : 'their-turn'}`}>
             {isMyTurn ? '🔥 Your Turn' : '⏳ Their Turn'}

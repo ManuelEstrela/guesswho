@@ -869,3 +869,89 @@ button:focus, input:focus {
     border-width: 4px;
   }
 }
+
+/* Stream Protection Styles */
+.party-code-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.code-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+.code-display.inline {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.code-text {
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: bold;
+  color: #4a5568;
+  letter-spacing: 2px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.code-display.inline .code-text {
+  font-size: 14px;
+  min-width: 60px;
+}
+
+.code-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.code-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.code-btn.small {
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
+.show-btn {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+}
+
+.hide-btn {
+  background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+  color: white;
+}
+
+.copy-btn {
+  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  color: white;
+}
+
+.code-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.auto-hide-notice {
+  font-size: 11px;
+  color: #718096;
+  font-style: italic;
+  margin-top: 4px;
+  text-align: center;
+}
