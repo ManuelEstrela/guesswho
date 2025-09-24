@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
     socket.join(code);
     socket.emit('party_created', { code, side: 'A' });
     io.to(code).emit('party_update', { players: Object.values(party.players) });
-    console.log(`[create] Party created: ${code}`);
+    console.log(`[create] Party created!`);
   });
 
   socket.on('join_party', ({ code, name }, callback) => {
